@@ -1,5 +1,6 @@
 import logging
 import os
+import requests
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from dotenv import load_dotenv
@@ -17,15 +18,42 @@ def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Hi!')
 
 
-def echo(bot, update):
-    """Echo the user message."""
-    bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
+def send_message(bot, update):
+    """Answer the user message via DialogFlow."""
+    bot.send_message(
+        chat_id=update.message.chat_id,
+        text=query_dflow(update.message.chat_id, update.message.text),
+
+    )
 
 
 def error(bot, update):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', bot, update.error)
 
+
+def query_dflow(session_id, query):
+    access_token = os.getenv("DIALOGFLOW_DEV_TOKEN")
+    base_api_url = "https://api.dialogflow.com/v1/"
+    api_command = "query"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    payload = {
+        "lang": "ru",
+        "query": query,
+        "sessionId": session_id,
+        "timezone": "Europe/Moscow"
+    }
+    response = requests.post(
+        f"{base_api_url}{api_command}",
+        headers=headers,
+        json=payload
+    )
+    if response.ok:
+        data = response.json()
+        answer = data["result"]["speech"]
+        return answer
 
 def main():
     """Start the bot."""
@@ -38,8 +66,8 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
 
-    # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    # on noncommand i.e message - send the message via DialogFlow
+    dp.add_handler(MessageHandler(Filters.text, send_message))
 
     # log all errors
     dp.add_error_handler(error)
@@ -55,3 +83,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # print(query_dflow("1111", "Привет, железка"))
