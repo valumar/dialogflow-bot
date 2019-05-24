@@ -1,0 +1,19 @@
+{
+  "name": "add-to-list",
+  "auto": true,
+  "responses": [
+    {
+      "speech": "ppp"
+    }
+  ],
+
+  "userSays": [
+    {
+      "data": [
+        {
+          "text": "oranges"
+        }
+      ]
+    }
+  ]
+}
