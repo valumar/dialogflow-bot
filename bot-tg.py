@@ -40,7 +40,7 @@ def query_dflow(session_id, query):
     payload = {
         "lang": "ru",
         "query": query,
-        "sessionId": session_id,
+        "sessionId": str(session_id),
         "timezone": "Europe/Moscow"
     }
     response = requests.post(
