@@ -2,6 +2,9 @@
 
 Support conversational Bot for Telegram and VK Groups powered by Google's machine learning
 
+![Support conversational Bot for Telegram and VK Groups](gif/GIF.gif)
+
+
 ### How to install
 
 This project consists of few parts:
