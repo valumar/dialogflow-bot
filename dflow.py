@@ -1,6 +1,8 @@
 import os
 import requests
+import logging
 
+logger = logging.getLogger(__name__)
 
 def query_dflow(session_id, query):
     access_token = os.getenv("DIALOGFLOW_DEV_TOKEN")
@@ -13,14 +15,16 @@ def query_dflow(session_id, query):
         "lang": "ru",
         "query": query,
         "sessionId": str(session_id),
-        "timezone": "Europe/Moscow"
+        "timezone": "Europe/Moscow",
+        "v": "20150910"
     }
     response = requests.post(
         f"{base_api_url}{api_command}",
         headers=headers,
         json=payload
     )
+    logger.info(response.text)
     if response.ok:
         data = response.json()
-        answer = data["result"]["speech"]
+        answer = data["result"]["fulfillment"]["speech"]
         return answer
