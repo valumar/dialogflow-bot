@@ -19,7 +19,8 @@ def query_dflow(session_id, query):
         "lang": "ru",
         "query": query,
         "sessionId": str(session_id),
-        "timezone": "Europe/Moscow"
+        "timezone": "Europe/Moscow",
+        "v": "20150910"
     }
 
     response = requests.post(
@@ -31,8 +32,8 @@ def query_dflow(session_id, query):
     if response.ok:
         data = response.json()
         print(data)
-        answer = data["result"]["speech"]
-        if data["result"]["metadata"]["isFallbackIntent"]:
+        answer = data["result"]["fulfillment"]["speech"]
+        if data["result"]["metadata"]["isFallbackIntent"] == "true":
             answer = "Вам ответит оператор"
         return answer
 
