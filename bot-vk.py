@@ -5,6 +5,7 @@ import requests
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from dotenv import load_dotenv
+import setup_logging
 
 
 def query_dflow(session_id, query):
@@ -47,6 +48,7 @@ def echo(event, vk_api):
 
 if __name__ == "__main__":
     load_dotenv()
+    setup_logging.config_logging(os.getenv("TELEGRAM_LOG_TOKEN"), os.getenv("TELEGRAM_LOG_CHAT_ID"))
     vk_session = vk_api.VkApi(token=os.getenv("VK_GROUP_TOKEN"))
     vk_api = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)

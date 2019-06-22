@@ -5,6 +5,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from dotenv import load_dotenv
 from dflow import query_dflow
 
+import setup_logging
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -32,6 +33,7 @@ def error(bot, update):
 
 def main():
     load_dotenv()
+    setup_logging.config_logging(os.getenv("TELEGRAM_LOG_TOKEN"), os.getenv("TELEGRAM_LOG_CHAT_ID"))
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
     updater = Updater(os.getenv("TELEGRAM_TOKEN"))
