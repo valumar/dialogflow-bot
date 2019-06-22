@@ -47,7 +47,7 @@ VK_GROUP_TOKEN=your_vk_group_token
 
 
 #### Logging Bot for Telegram installation requirements
-Please see [Installing Support Bot for Telegram](#installing-support-bot-for-telegram).
+Please see [Support Bot for Telegram installation requirements](#support-bot-for-telegram-installation-requirements).
 Paste your info to`.env`:
 ```dotenv
 TELEGRAM_LOG_TOKEN=
@@ -58,7 +58,7 @@ TELEGRAM_LOG_CHAT_ID=
 You have to register [DialogFlow account](https://dialogflow.com/)
 After that find "Developer access token" in project settings an paste it to `.env`:
 ```dotenv
-DIALOGFLOW_DEV_TOKEN
+DIALOGFLOW_DEV_TOKEN=
 ```
 Please note this app works only with DialogFlow V1 API (Will be shut down on October 23rd, 2019)
 
