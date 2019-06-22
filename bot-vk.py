@@ -1,11 +1,15 @@
 import random
 import os
+import logging
 
 import requests
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from dotenv import load_dotenv
 import setup_logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def query_dflow(session_id, query):
@@ -28,10 +32,10 @@ def query_dflow(session_id, query):
         headers=headers,
         json=payload,
     )
-    print(response.url, response.text)
+    logger.debug(response.url, response.text)
     if response.ok:
         data = response.json()
-        print(data)
+        logger.debug(data)
         answer = data["result"]["fulfillment"]["speech"]
         if data["result"]["metadata"]["isFallbackIntent"] == "true":
             answer = "Вам ответит оператор"
