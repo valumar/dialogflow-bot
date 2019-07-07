@@ -14,9 +14,12 @@ logger = logging.getLogger(__name__)
 
 
 def echo(event, vk_api):
+    message = query_dflow(event.user_id, event.text)
+    if mesaage is None:
+        message = "Вам ответит оператор"
     vk_api.messages.send(
         user_id=event.user_id,
-        message=query_dflow(event.user_id, event.text),
+        message=message,
         random_id=random.randint(1,1000)
     )
 

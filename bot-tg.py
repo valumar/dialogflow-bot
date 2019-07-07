@@ -18,9 +18,12 @@ def start(bot, update):
 
 def send_message(bot, update):
     """Answer the user message via DialogFlow."""
+    text = query_dflow(update.message.chat_id, update.message.text)
+    if text is None:
+        text = "Повторите Ваш вопрос"
     bot.send_message(
         chat_id=update.message.chat_id,
-        text=query_dflow(update.message.chat_id, update.message.text),
+        text=text,
     )
 
 

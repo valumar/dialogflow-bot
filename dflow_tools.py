@@ -29,5 +29,5 @@ def query_dflow(session_id, query):
         logger.debug(data)
         answer = data["result"]["fulfillment"]["speech"]
         if data["result"]["metadata"]["isFallbackIntent"] == "true":
-            answer = "Вам ответит оператор"
+            answer = None
         return answer
