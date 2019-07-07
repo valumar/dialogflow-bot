@@ -26,7 +26,6 @@ def query_dflow(session_id, query):
     logger.info(response.text)
     if response.ok:
         data = response.json()
-        print(data)
         answer = data["result"]["fulfillment"]["speech"]
         if data["result"]["metadata"]["isFallbackIntent"]:
             answer = "Вам ответит оператор"
