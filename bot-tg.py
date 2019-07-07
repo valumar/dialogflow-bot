@@ -3,7 +3,7 @@ import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from dotenv import load_dotenv
-from dflow import query_dflow
+from dflow_tools import query_dflow
 
 import setup_logging
 

@@ -2,45 +2,15 @@ import random
 import os
 import logging
 
-import requests
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from dotenv import load_dotenv
+from dflow_tools import query_dflow
+
 import setup_logging
 
 
 logger = logging.getLogger(__name__)
-
-
-def query_dflow(session_id, query):
-    access_token = os.getenv("DIALOGFLOW_DEV_TOKEN")
-    base_api_url = "https://api.dialogflow.com/v1/"
-    api_command = "query"
-    headers = {
-        "Authorization": f"Bearer {access_token}"
-    }
-    payload = {
-        "lang": "ru",
-        "query": query,
-        "sessionId": str(session_id),
-        "timezone": "Europe/Moscow",
-        "v": "20150910"
-    }
-
-    response = requests.post(
-        f"{base_api_url}{api_command}",
-        headers=headers,
-        json=payload,
-    )
-    logger.debug(response.url, response.text)
-    if response.ok:
-        data = response.json()
-        logger.debug(data)
-        answer = data["result"]["fulfillment"]["speech"]
-        if data["result"]["metadata"]["isFallbackIntent"] == "true":
-            answer = "Вам ответит оператор"
-        return answer
-
 
 
 def echo(event, vk_api):
