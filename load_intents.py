@@ -12,10 +12,13 @@ logger = logging.getLogger(__name__)
 
 def download_phrases():
     url = "https://dvmn.org/media/filer_public/a7/db/a7db66c0-1259-4dac-9726-2d1fa9c44f20/questions.json"
-    response = requests.get(url)
-    if response.ok:
-        return response.json()
-
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        if response.ok:
+            return response.json()
+    except requests.exceptions.HTTPError as e:
+        logger.error(f'HTTPError: {e}')
 
 def post_intent(data):
     baseurl = "https://api.dialogflow.com/v1/"
